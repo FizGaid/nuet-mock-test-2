@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUET Mock Test 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { navy: '#1e3a8a', cobalt: '#2563eb', ice: '#f0f9ff' }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="bg-ice text-navy font-sans antialiased">
+    <div id="app" class="min-h-screen flex flex-col"></div>
+
+    <script>
+        // ==========================================
+        // БАЗА ВОПРОСОВ MOCK TEST 2
+        // ==========================================
+        const examData = {
+            math: {
+                title: "Mathematics (Mock 2)",
+                duration: 60,
+                questions: [
+                    {
+                        id: "m1",
+                        text: "Convert 72 km/h to m/s.",
+                        options: [
+                            { id: "a", text: "15" },
+                            { id: "b", text: "20" },
+                            { id: "c", text: "25" },
+                            { id: "d", text: "30" }
+                        ],
+                        correct: "b",
+                        explanation: "1 km = 1000 m and 1 h = 3600 s. 72 km/h = 72 * 1000 / 3600 m/s = 72 / 3.6 = 20 m/s. Shortcut: km/h ÷ 3.6 = m/s.",
+                        points: 2
+                    },
+                    {
+                        id: "m2",
+                        text: "Simplify $(3 + \\sqrt{5})(4 - \\sqrt{5})$.",
+                        options: [
+                            { id: "a", text: "$17 + \\sqrt{5}$" },
+                            { id: "b", text: "$12 + 7\\sqrt{5}$" },
+                            { id: "c", text: "$7 + \\sqrt{5}$" },
+                            { id: "d", text: "$7 - \\sqrt{5}$" }
+                        ],
+                        correct: "c",
+                        explanation: "Expand all four products: $3 \\times 4 = 12$; $3 \\times (-\\sqrt{5}) = -3\\sqrt{5}$; $\\sqrt{5} \\times 4 = 4\\sqrt{5}$; $\\sqrt{5} \\times (-\\sqrt{5}) = -5$. Sum: $12 - 5 + (-3\\sqrt{5} + 4\\sqrt{5}) = 7 + \\sqrt{5}$.",
+                        points: 3
+                    },
+                    {
+                        id: "m3",
+                        text: "A rectangle has sides $(5 + \\sqrt{3})$ cm and $(5 - \\sqrt{3})$ cm. What is its area in cm²?",
+                        options: [
+                            { id: "a", text: "22" },
+                            { id: "b", text: "28" },
+                            { id: "c", text: "$25 - \\sqrt{3}$" },
+                            { id: "d", text: "20" }
+                        ],
+                        correct: "a",
+                        explanation: "Area = $(5 + \\sqrt{3})(5 - \\sqrt{3})$, a difference of squares: $a^2 - b^2$. $= 5^2 - (\\sqrt{3})^2 = 25 - 3 = 22$ cm².",
+                        points: 3
+                    },
+                    {
+                        id: "m4",
+                        text: "Each interior angle of a regular polygon is 150°. How many sides does the polygon have?",
+                        options: [
+                            { id: "a", text: "8" },
+                            { id: "b", text: "10" },
+                            { id: "c", text: "15" },
+                            { id: "d", text: "12" }
+                        ],
+                        correct: "d",
+                        explanation: "Exterior angle = $180° - 150° = 30°$. Exterior angles sum to 360°, so $n = 360/30 = 12$.",
+                        points: 3
+                    },
+                    {
+                        id: "m5",
+                        text: "Write as a single fraction: $0.4(5) + 0.(27)$",
+                        options: [
+                            { id: "a", text: "731/990" },
+                            { id: "b", text: "721/990" },
+                            { id: "c", text: "721/900" },
+                            { id: "d", text: "41/99" }
+                        ],
+                        correct: "b",
+                        explanation: "First number: $0.4(5) = 41/90$. Second number: $0.(27) = 27/99 = 3/11$. Common denominator 990: $41/90 = 451/990$ and $3/11 = 270/990$. Sum = $(451 + 270)/990 = 721/990$.",
+                        points: 4
+                    },
+                    {
+                        id: "m6",
+                        text: "One city has $8.2 \\times 10^6$ inhabitants and another has $5.7 \\times 10^5$. How many more people live in the larger city? Give the answer in standard form.",
+                        options: [
+                            { id: "a", text: "$7.63 \\times 10^5$" },
+                            { id: "b", text: "$2.5 \\times 10^6$" },
+                            { id: "c", text: "$7.63 \\times 10^6$" },
+                            { id: "d", text: "$7.63 \\times 10^7$" }
+                        ],
+                        correct: "c",
+                        explanation: "Bring both to the same power of 10: $5.7 \\times 10^5 = 0.57 \\times 10^6$. Difference = $(8.2 - 0.57) \\times 10^6 = 7.63 \\times 10^6$.",
+                        points: 4
+                    },
+                    {
+                        id: "m7",
+                        text: "Find the LCM of 84 and 126.",
+                        options: [
+                            { id: "a", text: "126" },
+                            { id: "b", text: "504" },
+                            { id: "c", text: "168" },
+                            { id: "d", text: "252" }
+                        ],
+                        correct: "d",
+                        explanation: "Prime factorisation: $84 = 2^2 \\times 3 \\times 7$; $126 = 2 \\times 3^2 \\times 7$. LCM takes the highest power of each prime: $2^2 \\times 3^2 \\times 7 = 4 \\times 9 \\times 7 = 252$.",
+                        points: 4
+                    },
+                    {
+                        id: "m8",
+                        text: "$\\nabla x$ is defined as the smallest odd number greater than the positive square root of $x$. What is the value of $\\nabla 50$?",
+                        options: [
+                            { id: "a", text: "7" },
+                            { id: "b", text: "9" },
+                            { id: "c", text: "11" },
+                            { id: "d", text: "8" }
+                        ],
+                        correct: "b",
+                        explanation: "$49 < 50 < 64$, so $7 < \\sqrt{50} < 8$. Odd numbers greater than 7.07: 9, 11, 13... The smallest is 9.",
+                        points: 5
+                    },
+                    {
+                        id: "m9",
+                        text: "An 80-litre mixture is 30% juice. How many litres of pure juice must be added to make a 50% juice mixture?",
+                        options: [
+                            { id: "a", text: "32" },
+                            { id: "b", text: "16" },
+                            { id: "c", text: "40" },
+                            { id: "d", text: "48" }
+                        ],
+                        correct: "a",
+                        explanation: "Juice now: $0.3 \\times 80 = 24$ L. Add x litres of pure juice: $(24 + x)/(80 + x) = 0.5 \\rightarrow 24 + x = 40 + 0.5x \\rightarrow 0.5x = 16 \\rightarrow x = 32$.",
+                        points: 4
+                    },
+                    {
+                        id: "m10",
+                        text: "Two similar bottles have heights 12 cm and 18 cm. The smaller bottle holds 400 ml. What is the capacity of the larger bottle, in ml?",
+                        options: [
+                            { id: "a", text: "600" },
+                            { id: "b", text: "900" },
+                            { id: "c", text: "1800" },
+                            { id: "d", text: "1350" }
+                        ],
+                        correct: "d",
+                        explanation: "Length scale factor = $18/12 = 3/2$. Volume scale factor = $(3/2)^3 = 27/8$. Larger volume = $400 \\times 27/8 = 1350$ ml.",
+                        points: 5
+                    },
+                    {
+                        id: "m11",
+                        text: "Written in the form $a(x + p)^2 + q$, the expression $2x^2 + 12x + 7$ has $q$ equal to",
+                        options: [
+                            { id: "a", text: "-7" },
+                            { id: "b", text: "7" },
+                            { id: "c", text: "-11" },
+                            { id: "d", text: "-18" }
+                        ],
+                        correct: "c",
+                        explanation: "Factor 2 from x-terms: $2(x^2 + 6x) + 7$. Complete the square: $x^2 + 6x = (x + 3)^2 - 9$. $2[(x + 3)^2 - 9] + 7 = 2(x + 3)^2 - 18 + 7 = 2(x + 3)^2 - 11$. So $q = -11$.",
+                        points: 5
+                    },
+                    {
+                        id: "m13",
+                        text: "Find the complete set of values of x for which $x^3 - 7x^2 + 12x > 0$.",
+                        options: [
+                            { id: "a", text: "0 < x < 4" },
+                            { id: "b", text: "0 < x < 3, x > 4" },
+                            { id: "c", text: "x < 0, 3 < x < 4" },
+                            { id: "d", text: "x < 0, x > 4" }
+                        ],
+                        correct: "b",
+                        explanation: "Factor: $x(x^2 - 7x + 12) = x(x - 3)(x - 4)$. Critical points: 0, 3, 4. Testing intervals shows it is positive when $0 < x < 3$ or $x > 4$.",
+                        points: 5
+                    },
+                    {
+                        id: "m18",
+                        text: "Maria bought 25 items, notebooks and pens, and spent $41. A notebook costs $2 and a pen costs $1.25. How many notebooks did she buy?",
+                        options: [
+                            { id: "a", text: "12" },
+                            { id: "b", text: "10" },
+                            { id: "c", text: "15" },
+                            { id: "d", text: "13" }
+                        ],
+                        correct: "d",
+                        explanation: "Let n = notebooks, p = pens. $n + p = 25 \\rightarrow p = 25 - n$. Cost: $2n + 1.25(25 - n) = 41 \\rightarrow 2n + 31.25 - 1.25n = 41 \\rightarrow 0.75n = 9.75 \\rightarrow n = 13$.",
+                        points: 4
+                    },
+                    {
+                        id: "m20",
+                        text: "Find the area of a sector whose arc length is 14 cm and whose radius is 5 cm, in cm².",
+                        options: [
+                            { id: "a", text: "35" },
+                            { id: "b", text: "70" },
+                            { id: "c", text: "140" },
+                            { id: "d", text: "25\\pi" }
+                        ],
+                        correct: "a",
+                        explanation: "Area of sector = $1/2 \\times r \\times \\text{arc length}$. $A = 1/2 \\times 5 \\times 14 = 35$ cm².",
+                        points: 5
+                    },
+                    {
+                        id: "m30",
+                        text: "Find the sum of the solutions of $(x + 2)^2 - (x + 2) - 12 = 0$.",
+                        options: [
+                            { id: "a", text: "-7" },
+                            { id: "b", text: "7" },
+                            { id: "c", text: "3" },
+                            { id: "d", text: "-3" }
+                        ],
+                        correct: "d",
+                        explanation: "Substitute $u = x + 2$: $u^2 - u - 12 = 0 \\rightarrow (u - 4)(u + 3) = 0 \\rightarrow u = 4$ or $u = -3$. Since $x = u - 2$, $x = 2$ or $x = -5$. Sum = $2 - 5 = -3$.",
+                        points: 5
+                    }
+                ]
+            },
+            ct: {
+                title: "Critical Thinking & Problem Solving (Mock 2)",
+                duration: 60,
+                questions: [
+                    {
+                        id: "ct1",
+                        text: "Throughout history, gold has been revered and used for expensive jewellery and ornamentation. But in the future, it will be prized for its practical uses rather than for its aesthetic appeal. It wasn't until early in the last century that gold's electrical conductivity properties were discovered. Solid state electronic devices use very low voltages and currents, which are easily interrupted by corrosion at the contact points. Gold is such an efficient conductor that it can carry these tiny currents and remain free of corrosion, making the devices highly reliable. A small amount of gold is used in almost every modern electronic device, and it is predicted that within ten years, more gold will be used in the production of electronics than in jewellery.\n\nWhich one of the following best expresses the main conclusion of the above argument?",
+                        options: [
+                            { id: "A", text: "In the future gold will be prized for its practical uses rather than for its aesthetic appeal." },
+                            { id: "B", text: "It wasn't until early in the last century that gold's electrical conductivity properties were discovered." },
+                            { id: "C", text: "Gold is such an efficient conductor that it can carry tiny electrical currents and remain free of corrosion." },
+                            { id: "D", text: "A small amount of gold is used in almost every modern electronic device." },
+                            { id: "E", text: "Within ten years, more gold will be used in the production of electronics than in jewellery." }
+                        ],
+                        correct: "A",
+                        explanation: "The correct answer is A. The first sentence introduces the topic, and the second sentence provides the main conclusion that gold's practical uses will outweigh its aesthetic appeal in the future. The rest of the passage provides the reasoning and evidence for this claim.",
+                        points: 1
+                    },
+                    {
+                        id: "ct3",
+                        text: "Whether known as the high street, main street, or market square, central shopping districts in many towns throughout the world are in danger of disappearing. The decline in some downtown shopping areas began decades ago because of various social and economic trends, including an increase in the number of women working outside of the home and the development of large supermarkets and retail parks further out on the outskirts of towns. While change is inevitably difficult, communities should not be fearful about the loss of their traditional shopping areas. Shopping is increasingly conducted via the internet. Compared to traditional ways of shopping, the online model offers savings in terms of time and other resources while also providing greater consumer choice.\n\nWhich one of the following is an underlying assumption of the above argument?",
+                        options: [
+                            { id: "A", text: "Women in many countries do less shopping than in previous decades." },
+                            { id: "B", text: "The decline in central shopping districts is happening more quickly in places with wealthier populations." },
+                            { id: "C", text: "It is difficult for governments to try to stop the decline of central shopping areas." },
+                            { id: "D", text: "The growth in online shopping will not threaten the profitability of large supermarkets on the outskirts of towns." },
+                            { id: "E", text: "Traditional shopping areas serve no important purpose that cannot be satisfied by alternative shopping methods." }
+                        ],
+                        correct: "E",
+                        explanation: "The correct answer is E. The argument assumes that because alternative shopping methods (like the internet) are more efficient, there is nothing else of value lost when traditional shopping areas disappear (like community connection or social spaces).",
+                        points: 1
+                    },
+                    {
+                        id: "ct4",
+                        text: "I have always said that owners of expensive cars are less considerate drivers, and now a study has proved me right. The study showed that they are less likely to stop at a pedestrian crossing to allow someone to cross the road than drivers of less expensive cars - in fact, their likelihood to do so decreased by about 3% for every £800 increase in the vehicle's value. Previous studies have also shown that wealth is associated with greater self-regard and lower levels of fellow feeling. So next time an expensive sports car comes along while you are waiting at a pedestrian crossing, you can be sure that it won't stop.\n\nWhich one of the following best illustrates the flaw in the above argument?",
+                        options: [
+                            { id: "A", text: "It ignores the possibility that the drivers are wealthy because they are selfish, rather than vice versa." },
+                            { id: "B", text: "It assumes that owners of expensive cars are unlikely ever to be pedestrians themselves." },
+                            { id: "C", text: "It fails to take account of the greater safety features available in more expensive cars." },
+                            { id: "D", text: "It assumes that just because drivers of expensive cars are less likely to stop, none of them will." },
+                            { id: "E", text: "It ignores the fact that pedestrians can take undue risks when trying to cross the road." }
+                        ],
+                        correct: "D",
+                        explanation: "The correct answer is D. The flaw is over-generalizing from a statistical probability (decreased likelihood) to an absolute certainty ('you can be sure that it won't stop').",
+                        points: 1
+                    },
+                    {
+                        id: "ct5",
+                        text: "You only win an election if you gain a majority of votes. You must have gained a majority of votes because you were named the winner in the election.\n\nWhich one of the following most closely parallels the reasoning used in the above argument?",
+                        options: [
+                            { id: "A", text: "You are only promoted to be head teacher if you have taught for many years. You have taught for many years, so you are sure to be promoted to be head teacher." },
+                            { id: "B", text: "You can only go to the concert if you buy tickets or win them in the competition. You must have bought your tickets as someone else won the competition." },
+                            { id: "C", text: "You only get a high-paying job if you study hard in school. You are certain to get a high-paying job because you studied hard in school." },
+                            { id: "D", text: "You can only apply for a loan from the bank or the credit union. You missed the bank's deadline for submitting forms, so you will have to apply to the credit union." },
+                            { id: "E", text: "You are only eligible for the scholarship if you can prove financial need. You have been declared eligible for the scholarship so you must have proved financial need." }
+                        ],
+                        correct: "E",
+                        explanation: "The correct answer is E. The structure is: X is a necessary condition for Y. Y has occurred, therefore X must have occurred. E perfectly matches this logical structure.",
+                        points: 1
+                    },
+                    {
+                        id: "ct9",
+                        text: "Bicycle owners have a duty to have their bicycles maintained properly. This is to ensure the safety both of the rider and of other road users. If an injury is caused to another person as a result of a failure to maintain a bicycle properly, then the injured person should be entitled to compensation from the owner of the bicycle.\n\nWhich one of the following best illustrates the principle used in the above argument?",
+                        options: [
+                            { id: "A", text: "Skiers injured whilst skiing off the official ski run should be entitled to compensation from the manufacturer of the skis." },
+                            { id: "B", text: "A passenger on a train who is injured tripping over luggage not put in the luggage rack should be entitled to compensation from the train company." },
+                            { id: "C", text: "A child injured while playing on a broken swing in a park should be entitled to compensation from the park owner." },
+                            { id: "D", text: "A householder scalded when pouring water from a kettle should be entitled to compensation from the manufacturer of the kettle." },
+                            { id: "E", text: "People who eat too many biscuits and damage their health should be entitled to compensation from the shops which sold the biscuits." }
+                        ],
+                        correct: "C",
+                        explanation: "The correct answer is C. The underlying principle is that the owner of property is responsible for maintaining it safely, and must compensate those injured due to a failure in that maintenance.",
+                        points: 1
+                    },
+                    {
+                        id: "ps2",
+                        text: "A quiz consists of 7 rounds, each of which contains 20 questions. Each question is worth one point. At the end of the quiz, but before any of the answers or scores are revealed, each team is allowed to select one of the rounds and the score for that round is tripled. In addition, the scores for the rounds immediately before and after the chosen round are doubled. The winning team at last week's quiz had the following scores in each of the rounds:\nRound 1: 14\nRound 2: 16\nRound 3: 6\nRound 4: 20\nRound 5: 10\nRound 6: 18\nRound 7: 4\n\nThe winning team's final score was 136.\nWhich round did the winning team choose to have the score tripled?",
+                        options: [
+                            { id: "A", text: "round 2" },
+                            { id: "B", text: "round 3" },
+                            { id: "C", text: "round 4" },
+                            { id: "D", text: "round 5" },
+                            { id: "E", text: "round 6" }
+                        ],
+                        correct: "B",
+                        explanation: "The correct answer is B. Base sum = 88. We need 48 additional points. Tripling Round 3 adds 2 * 6 = 12 points. Doubling R2 adds 16. Doubling R4 adds 20. Total additional = 12 + 16 + 20 = 48 points. 88 + 48 = 136.",
+                        points: 1
+                    },
+                    {
+                        id: "ps6",
+                        text: "Rob has two different mixtures of apple juice and orange juice.\nmixture 1: 40% apple juice and 60% orange juice\nmixture 2: 70% apple juice and 30% orange juice\n\nRob wants to use these two mixtures to make 6 litres of a juice mixture which is 50% apple juice and 50% orange juice.\nHow much of mixture 2 does Rob need to use?",
+                        options: [
+                            { id: "A", text: "1 litre" },
+                            { id: "B", text: "2 litres" },
+                            { id: "C", text: "3 litres" },
+                            { id: "D", text: "4 litres" },
+                            { id: "E", text: "5 litres" }
+                        ],
+                        correct: "B",
+                        explanation: "The correct answer is B. Let x be volume of mix 2. Apple juice equation: 0.7x + 0.4(6-x) = 0.5 * 6. 0.7x + 2.4 - 0.4x = 3. 0.3x = 0.6. x = 2 litres.",
+                        points: 1
+                    },
+                    {
+                        id: "ps12",
+                        text: "The shampoo that I normally buy costs £1.96 for a 500 ml bottle and always lasts for 40 days. Last month I decided to try a new brand that is 36p cheaper and contains 550 ml. However, because of the amount that I have had to use to wash my hair properly, it has run out after only 25 days.\n\nBased upon my experience, by how many pence per day is my normal shampoo better value than the new brand?",
+                        options: [
+                            { id: "A", text: "1.5" },
+                            { id: "B", text: "2.4" },
+                            { id: "C", text: "4.9" },
+                            { id: "D", text: "6.4" },
+                            { id: "E", text: "9.5" }
+                        ],
+                        correct: "A",
+                        explanation: "The correct answer is A. Normal: 196p / 40 days = 4.9p/day. New: (196-36) = 160p / 25 days = 6.4p/day. Difference = 6.4 - 4.9 = 1.5p/day.",
+                        points: 1
+                    },
+                    {
+                        id: "ps14",
+                        text: "Alex and Anita play a game where they need to form words from letters. The value of each letter is a whole number of points (which can be 0). Alex and Anita earn points by adding together the value of the letters in the words they form.\nMOAN = 7\nMOON = 8\nNOON = 10\n\nAnita has just formed the word ANNA.\nWhat is the value of the word ANNA?",
+                        options: [
+                            { id: "A", text: "4" },
+                            { id: "B", text: "6" },
+                            { id: "C", text: "8" },
+                            { id: "D", text: "10" },
+                            { id: "E", text: "12" }
+                        ],
+                        correct: "C",
+                        explanation: "The correct answer is C (8). NOON (2N+2O)=10 so N+O=5. MOON (M+2O+N)=8. MOAN (M+O+A+N)=7. Solving these gives A+M=2. ANNA = 2A+2N = 2(A+N). Since M=N-2, A+M=2 means A+N-2=2 so A+N=4. Thus ANNA = 2(4) = 8.",
+                        points: 1
+                    },
+                    {
+                        id: "ps18",
+                        text: "Sean is taking his car to Sunny Island. He lives 38 miles away from the mainland terminal where the seaport and airport are based. He has researched the travel costs and come up with two possible options. The ferry ticket (car and passenger) is $80. Alternatively, a plane ticket is $50 and the seaport company will transport his car (port to port) for $100. Fuel costs are $1.50 per mile.\n\nHow much money will Sean save by taking the cheaper option?",
+                        options: [
+                            { id: "A", text: "$13" },
+                            { id: "B", text: "$20" },
+                            { id: "C", text: "$30" },
+                            { id: "D", text: "$70" },
+                            { id: "E", text: "$127" }
+                        ],
+                        correct: "D",
+                        explanation: "The correct answer is D. Both options require driving 38 miles to the port, so fuel cost is identical and cancels out. Option 1: Ferry = $80. Option 2: Plane ($50) + Car Transport ($100) = $150. Savings = 150 - 80 = $70.",
+                        points: 1
+                    }
+                ]
+            }
+        };
+
+        // ==========================================
+        // ЛОГИКА ПРИЛОЖЕНИЯ
+        // ==========================================
+        let state = {
+            view: 'home',
+            subject: null,
+            currentIndex: 0,
+            answers: {},
+            timeLeft: 0,
+            timerId: null
+        };
+
+        const app = document.getElementById('app');
+
+        function renderMath() {
+            if (window.renderMathInElement) {
+                window.renderMathInElement(app, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        function renderHome() {
+            app.innerHTML = `
+                <div class="max-w-4xl mx-auto p-8 w-full">
+                    <h1 class="text-4xl font-bold text-navy mb-2">NUET MOCK TEST 2</h1>
+                    <p class="text-cobalt text-xl mb-10">Practice. Improve. Succeed.</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-navy flex flex-col">
+                            <h2 class="text-2xl font-bold text-navy mb-4">Mathematics</h2>
+                            <p class="text-gray-600 mb-6 flex-grow">Evaluate your problem-solving skills. No calculators allowed.</p>
+                            <button onclick="startExam('math')" class="bg-navy text-white py-3 rounded-lg hover:bg-cobalt transition font-bold">Start Math Test</button>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border-t-4 border-cobalt flex flex-col">
+                            <h2 class="text-2xl font-bold text-cobalt mb-4">Critical Thinking</h2>
+                            <p class="text-gray-600 mb-6 flex-grow">Analyze arguments, find flaws, and identify assumptions.</p>
+                            <button onclick="startExam('ct')" class="bg-cobalt text-white py-3 rounded-lg hover:bg-navy transition font-bold">Start CT Test</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startExam(subject) {
+            state.subject = subject;
+            state.view = 'exam';
+            state.currentIndex = 0;
+            state.answers = {};
+            state.timeLeft = examData[subject].duration * 60;
+            
+            clearInterval(state.timerId);
+            state.timerId = setInterval(() => {
+                state.timeLeft--;
+                if (state.timeLeft <= 0) {
+                    submitExam();
+                } else {
+                    document.getElementById('timer-display').innerText = formatTime(state.timeLeft);
+                }
+            }, 1000);
+
+            renderExam();
+        }
+
+        function selectAnswer(qId, aId) {
+            state.answers[qId] = aId;
+            renderExam();
+        }
+
+        function renderExam() {
+            const data = examData[state.subject];
+            const q = data.questions[state.currentIndex];
+            const answeredCount = Object.keys(state.answers).length;
+
+            let optionsHtml = q.options.map(opt => {
+                const isSelected = state.answers[q.id] === opt.id || state.answers[q.id] === opt.id.toLowerCase() || state.answers[q.id] === opt.id.toUpperCase();
+                return `
+                    <button onclick="selectAnswer('${q.id}', '${opt.id}')" 
+                        class="w-full text-left p-4 rounded-lg border-2 transition ${isSelected ? 'border-cobalt bg-blue-50' : 'border-gray-200 hover:border-gray-300'}">
+                        <span class="font-bold mr-3 uppercase">${opt.id}.</span> ${opt.text}
+                    </button>
+                `;
+            }).join('');
+
+            let navHtml = data.questions.map((_, idx) => {
+                const hasAnswer = state.answers[data.questions[idx].id];
+                const isCurrent = idx === state.currentIndex;
+                return `
+                    <button onclick="state.currentIndex = ${idx}; renderExam();" 
+                        class="p-2 rounded font-semibold text-sm ${isCurrent ? 'ring-2 ring-cobalt' : ''} ${hasAnswer ? 'bg-cobalt text-white' : 'bg-gray-100 text-gray-600'}">
+                        ${idx + 1}
+                    </button>
+                `;
+            }).join('');
+
+            app.innerHTML = `
+                <div class="bg-navy text-white p-4 flex justify-between items-center shadow-md">
+                    <div class="font-bold text-lg">${data.title} Exam</div>
+                    <div class="flex items-center gap-4">
+                        <div id="timer-display" class="font-mono text-xl">${formatTime(state.timeLeft)}</div>
+                        <button onclick="if(confirm('Submit your test?')) submitExam();" class="bg-white text-navy px-4 py-1 rounded-md font-bold hover:bg-gray-200">Submit</button>
+                    </div>
+                </div>
+
+                <div class="flex-grow max-w-5xl mx-auto w-full p-4 flex flex-col md:flex-row gap-6 mt-6">
+                    <div class="md:w-3/4 bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+                        <h2 class="text-xl font-bold text-navy mb-4">Question ${state.currentIndex + 1} of ${data.questions.length}</h2>
+                        <div class="text-lg mb-8 whitespace-pre-wrap">${q.text}</div>
+                        <div class="space-y-3">${optionsHtml}</div>
+                        
+                        <div class="flex justify-between mt-10">
+                            <button onclick="if(state.currentIndex > 0) { state.currentIndex--; renderExam(); }" class="font-bold text-cobalt ${state.currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}">Previous</button>
+                            <button onclick="if(state.currentIndex < ${data.questions.length - 1}) { state.currentIndex++; renderExam(); }" class="font-bold text-cobalt ${state.currentIndex === data.questions.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}">Next</button>
+                        </div>
+                    </div>
+
+                    <div class="md:w-1/4 bg-white p-4 rounded-xl shadow-sm border border-gray-100 h-fit">
+                        <h3 class="font-bold text-navy mb-3">Progress: ${answeredCount}/${data.questions.length}</h3>
+                        <div class="grid grid-cols-5 gap-2">${navHtml}</div>
+                    </div>
+                </div>
+            `;
+            setTimeout(renderMath, 0);
+        }
+
+        function submitExam() {
+            clearInterval(state.timerId);
+            state.view = 'results';
+            renderResults();
+        }
+
+        function renderResults() {
+            const data = examData[state.subject];
+            let score = 0;
+            let totalPoints = 0;
+
+            let reviewHtml = data.questions.map((q, idx) => {
+                totalPoints += q.points;
+                const normalizedAnswer = state.answers[q.id] ? state.answers[q.id].toLowerCase() : null;
+                const normalizedCorrect = q.correct.toLowerCase();
+                
+                const isCorrect = normalizedAnswer === normalizedCorrect;
+                if (isCorrect) score += q.points;
+
+                const myAnswer = q.options.find(o => o.id.toLowerCase() === normalizedAnswer);
+                const correctOption = q.options.find(o => o.id.toLowerCase() === normalizedCorrect);
+
+                return `
+                    <div class="p-6 rounded-xl border-l-4 mb-6 ${isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'}">
+                        <h4 class="font-bold text-lg mb-4">Question ${idx + 1} ${isCorrect ? '✅' : '❌'}</h4>
+                        <div class="mb-4 whitespace-pre-wrap">${q.text}</div>
+                        <div class="mb-2"><strong>Your answer:</strong> ${myAnswer ? myAnswer.text : '<i>Not answered</i>'}</div>
+                        ${!isCorrect ? `<div class="mb-4 text-green-700"><strong>Correct answer:</strong> ${correctOption.text}</div>` : ''}
+                        <div class="mt-4 p-4 bg-white rounded-lg border border-gray-200">
+                            <p class="font-bold text-sm text-cobalt mb-1">EXPLANATION:</p>
+                            <p class="text-sm whitespace-pre-wrap">${q.explanation}</p>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const percentage = Math.round((score / totalPoints) * 100);
+
+            app.innerHTML = `
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg mt-8 mb-8 border-t-8 border-navy">
+                    <h1 class="text-3xl font-bold text-navy mb-6">Test Results: ${data.title}</h1>
+                    <div class="flex items-center gap-8 mb-10 p-6 bg-blue-50 rounded-xl">
+                        <div class="text-6xl font-bold text-cobalt">${percentage}%</div>
+                        <div>
+                            <p class="text-lg">Points: <strong>${score} / ${totalPoints}</strong></p>
+                            <p class="text-lg">Answered: <strong>${Object.keys(state.answers).length} / ${data.questions.length}</strong></p>
+                        </div>
+                    </div>
+                    <h3 class="text-2xl font-bold text-navy mb-6">Detailed Review</h3>
+                    <div>${reviewHtml}</div>
+                    <button onclick="state.view = 'home'; renderHome();" class="mt-8 bg-navy text-white px-6 py-3 rounded-lg font-bold hover:bg-cobalt">Back to Home</button>
+                </div>
+            `;
+            setTimeout(renderMath, 0);
+        }
+
+        function formatTime(seconds) {
+            const m = Math.floor(seconds / 60);
+            const s = seconds % 60;
+            return `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        renderHome();
+    </script>
+</body>
+</html>
